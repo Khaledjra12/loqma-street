@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لقمة ستريت | Loqma Street — شاورما وسناكات عمّان</title>
+  <meta name="description" content="لقمة ستريت: أطيب شاورما وسناكات في عمّان، مفتوح من 10 صباحاً حتى 3 فجراً. اطلب أونلاين، استلام أو أكل بالمطعم.">
+  <meta name="theme-color" content="#ff5a1f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌯%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container nav">
+    <a href="#home" class="logo"><span class="logo-ico">🌯</span><span class="logo-txt" data-brand>لقمة ستريت</span></a>
+    <nav class="links" id="links">
+      <a href="#home" data-i18n="nav_home">الرئيسية</a>
+      <a href="#menu" data-i18n="nav_menu">المنيو</a>
+      <a href="#about" data-i18n="nav_about">من نحن</a>
+      <a href="#gallery" data-i18n="nav_gallery">المعرض</a>
+      <a href="#book" data-i18n="nav_book">حجز طاولة</a>
+      <a href="#reviews" data-i18n="nav_reviews">التقييمات</a>
+      <a href="#contact" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn-lang" id="langBtn" aria-label="Language">EN</button>
+      <button class="btn-cart" id="cartBtn" aria-label="Cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <span class="float f1">🌯</span><span class="float f2">🍟</span><span class="float f3">🍔</span>
+    <span class="float f4">🥙</span><span class="float f5">🍗</span><span class="float f6">🍋</span>
+  </div>
+  <div class="container hero-in">
+    <div class="hero-text reveal">
+      <span class="badge" data-i18n="hero_badge">مفتوح حتى 3 فجراً 🌙</span>
+      <h1 data-i18n-html="hero_title">أطيب شاورما <span>وسناكات</span> بعمّان</h1>
+      <p data-i18n="hero_sub">نحضّر لك كل لفّة على الفحم، طازجة ومقرمشة.</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn btn-primary" data-i18n="hero_cta1">اطلب هلأ</a>
+        <a href="#menu" class="btn btn-ghost" data-i18n="hero_cta2">شوف المنيو</a>
+      </div>
+      <div class="status-pill" id="statusPill"><i></i><span id="statusTxt"></span></div>
+    </div>
+    <div class="hero-art reveal">
+      <div class="plate"><div class="plate-emoji">🌯</div><div class="steam"><i></i><i></i><i></i></div></div>
+      <div class="stats">
+        <div><b data-count="15">0</b><small data-i18n="stat1">صنف</small></div>
+        <div><b>4.9★</b><small data-i18n="stat2">تقييم</small></div>
+        <div><b data-count="17">0</b><small data-i18n="stat3">ساعة تشغيل</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="wave"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,30 L1440,80 L0,80 Z"/></svg></div>
+</section>
+
+<section class="section" id="menu">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 data-i18n="menu_title">منيو لقمة ستريت</h2>
+      <p data-i18n="menu_sub">اختار وجبتك وضيفها عالسلة</p>
+    </div>
+    <div class="menu-tools reveal">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-cat="all" data-i18n="cat_all">الكل</button>
+        <button class="tab" data-cat="shawarma" data-i18n="cat_shawarma">شاورما</button>
+        <button class="tab" data-cat="snacks" data-i18n="cat_snacks">سناكات</button>
+        <button class="tab" data-cat="drinks" data-i18n="cat_drinks">مشروبات</button>
+        <button class="tab" data-cat="sweets" data-i18n="cat_sweets">حلويات</button>
+      </div>
+      <input type="search" id="search" class="search" data-i18n-ph="search_ph" placeholder="ابحث في المنيو...">
+    </div>
+    <div class="grid" id="menuGrid"></div>
+    <p class="empty" id="menuEmpty" hidden data-i18n="no_results">ما لقينا أصناف مطابقة</p>
+    <p class="note" data-i18n="cur_note">الأسعار بالدينار الأردني</p>
+  </div>
+</section>
+
+<section class="section alt" id="about">
+  <div class="container about">
+    <div class="about-art reveal">
+      <div class="blob"><span>👨‍🍳</span></div>
+      <div class="chip c1">🔥</div><div class="chip c2">🌯</div><div class="chip c3">⭐</div>
+    </div>
+    <div class="about-text reveal">
+      <h2 data-i18n="about_title">حكايتنا</h2>
+      <p data-i18n="about_p1"></p>
+      <p data-i18n="about_p2"></p>
+      <div class="features">
+        <div class="feat"><span>🥬</span><b data-i18n="f1t">طازج يومياً</b><small data-i18n="f1d"></small></div>
+        <div class="feat"><span>🔥</span><b data-i18n="f2t">على الفحم</b><small data-i18n="f2d"></small></div>
+        <div class="feat"><span>⚡</span><b data-i18n="f3t">سريع</b><small data-i18n="f3d"></small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 data-i18n="gallery_title">من مطبخنا</h2>
+      <p data-i18n="gallery_sub"></p>
+    </div>
+    <div class="gallery reveal" id="galleryGrid">
+      <div class="g g1" style="--a:#ff9a3d;--b:#e8431a"><span>🌯</span></div>
+      <div class="g g2" style="--a:#ffd166;--b:#f08a24"><span>🍟</span></div>
+      <div class="g g3" style="--a:#e76f51;--b:#7a1f12"><span>🍔</span></div>
+      <div class="g g4" style="--a:#95d5b2;--b:#2d6a4f"><span>🍋</span></div>
+      <div class="g g5" style="--a:#ffcf56;--b:#c9701a"><span>🍯</span></div>
+      <div class="g g6" style="--a:#f4a259;--b:#8d2b1f"><span>🥙</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="book">
+  <div class="container narrow">
+    <div class="sec-head reveal">
+      <h2 data-i18n="book_title">احجز طاولتك</h2>
+      <p data-i18n="book_sub"></p>
+    </div>
+    <form class="card form reveal" id="bookForm" novalidate>
+      <div class="row">
+        <label><span data-i18n="f_name">الاسم</span><input name="name" type="text" required maxlength="60"></label>
+        <label><span data-i18n="f_phone">رقم الهاتف</span><input name="phone" type="tel" inputmode="tel" required maxlength="20" dir="ltr"></label>
+      </div>
+      <div class="row three">
+        <label><span data-i18n="f_date">التاريخ</span><input name="date" type="date" required></label>
+        <label><span data-i18n="f_time">الوقت</span><input name="time" type="time" required></label>
+        <label><span data-i18n="f_guests">عدد الأشخاص</span><input name="guests" type="number" min="1" max="30" value="2" required></label>
+      </div>
+      <label><span data-i18n="f_notes">ملاحظات</span><textarea name="notes" rows="3" maxlength="300"></textarea></label>
+      <button class="btn btn-primary full" type="submit" data-i18n="book_btn">تأكيد الحجز</button>
+      <p class="msg" id="bookMsg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 data-i18n="reviews_title">آراء زبائننا</h2>
+      <p data-i18n="reviews_sub"></p>
+    </div>
+    <div class="reviews" id="reviewsGrid"></div>
+    <form class="card form narrow-form reveal" id="reviewForm" novalidate>
+      <h3 data-i18n="add_review">أضف تقييمك</h3>
+      <label><span data-i18n="r_name">اسمك</span><input name="name" type="text" maxlength="40" required></label>
+      <div class="stars-input" id="starsInput" role="radiogroup" aria-label="rating">
+        <button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button>
+      </div>
+      <label><span data-i18n="r_text">اكتب رأيك</span><textarea name="text" rows="3" maxlength="250" required></textarea></label>
+      <button class="btn btn-primary full" type="submit" data-i18n="r_send">إرسال التقييم</button>
+      <p class="msg" id="reviewMsg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section class="section alt" id="contact">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 data-i18n="contact_title">تواصل معنا</h2>
+      <p data-i18n="contact_sub"></p>
+    </div>
+    <div class="contact">
+      <div class="contact-list reveal">
+        <div class="ci"><span>📍</span><div><b data-i18n="c_addr">العنوان</b><p data-i18n="c_addr_v"></p></div></div>
+        <div class="ci"><span>📞</span><div><b data-i18n="c_phone">الهاتف</b><p dir="ltr" id="cPhone"></p></div></div>
+        <div class="ci"><span>✉️</span><div><b data-i18n="c_mail">البريد</b><p dir="ltr" id="cMail"></p></div></div>
+        <div class="ci"><span>🕙</span><div><b data-i18n="hours_label">ساعات الدوام</b><p data-i18n="hours_val"></p></div></div>
+        <div class="social">
+          <a class="btn btn-wa" id="waLink" target="_blank" rel="noopener" data-i18n="c_wa">راسلنا واتساب</a>
+          <a class="btn btn-ghost-dark" id="igLink" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="map reveal"><iframe id="mapFrame" title="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container foot">
+    <div class="logo"><span class="logo-ico">🌯</span><span class="logo-txt" data-brand>لقمة ستريت</span></div>
+    <p>© <span id="year"></span> <span data-brand>لقمة ستريت</span> — <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></p>
+  </div>
+</footer>
+
+<a href="#home" class="to-top" id="toTop" aria-label="Top">↑</a>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head"><h3 data-i18n="cart_title">سلتك</h3><button class="x" id="closeCart" aria-label="Close">✕</button></div>
+  <div class="drawer-body" id="cartItems"></div>
+  <div class="drawer-foot" id="cartFoot">
+    <div class="sum"><span data-i18n="subtotal">المجموع</span><b id="cartSub">0.00</b></div>
+    <button class="btn btn-primary full" id="checkoutBtn" data-i18n="checkout">إتمام الطلب</button>
+    <button class="link-btn" id="clearCart" data-i18n="clear">تفريغ السلة</button>
+  </div>
+</aside>
+
+<div class="modal" id="checkoutModal" aria-hidden="true">
+  <div class="modal-box">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <h3 data-i18n="co_title">إتمام الطلب</h3>
+    <form id="orderForm" novalidate>
+      <div class="row">
+        <label><span data-i18n="f_name">الاسم</span><input name="name" type="text" maxlength="60" required></label>
+        <label><span data-i18n="f_phone">الهاتف</span><input name="phone" type="tel" inputmode="tel" maxlength="20" dir="ltr" required></label>
+      </div>
+      <fieldset>
+        <legend data-i18n="o_type">طريقة الاستلام</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="otype" value="dine" checked><span data-i18n="o_dine">أكل بالمطعم</span></label>
+          <label class="opt"><input type="radio" name="otype" value="pickup"><span data-i18n="o_pickup">استلام</span></label>
+          <label class="opt"><input type="radio" name="otype" value="delivery"><span data-i18n="o_delivery">توصيل</span></label>
+        </div>
+      </fieldset>
+      <label id="tableWrap"><span data-i18n="o_table">رقم الطاولة</span><input name="table" type="text" maxlength="10"></label>
+      <label id="addrWrap" hidden><span data-i18n="o_addr">عنوان التوصيل</span><textarea name="address" rows="2" maxlength="200"></textarea></label>
+      <fieldset>
+        <legend data-i18n="pay_method">طريقة الدفع</legend>
+        <div class="opts two">
+          <label class="opt"><input type="radio" name="pay" value="cash" checked><span data-i18n="pay_cash">كاش</span></label>
+          <label class="opt"><input type="radio" name="pay" value="card"><span data-i18n="pay_card">بطاقة</span></label>
+        </div>
+      </fieldset>
+      <div class="cardbox" id="cardBox" hidden>
+        <div class="credit"><div class="credit-top"><span>💳</span><b id="cardBrand">CARD</b></div><div class="credit-num" id="ccPreview">•••• •••• •••• ••••</div></div>
+        <label><span data-i18n="card_num">رقم البطاقة</span><input name="cnum" id="cnum" type="text" inputmode="numeric" autocomplete="cc-number" maxlength="23" dir="ltr" placeholder="0000 0000 0000 0000"></label>
+        <label><span data-i18n="card_name">الاسم على البطاقة</span><input name="cname" type="text" autocomplete="cc-name" maxlength="40" dir="ltr"></label>
+        <div class="row">
+          <label><span data-i18n="card_exp">الانتهاء</span><input name="cexp" id="cexp" type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" dir="ltr" placeholder="MM/YY"></label>
+          <label><span data-i18n="card_cvv">CVV</span><input name="ccvv" type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4" dir="ltr" placeholder="•••"></label>
+        </div>
+        <p class="secure" data-i18n="card_note"></p>
+      </div>
+      <div class="totals">
+        <div><span data-i18n="subtotal">المجموع</span><b id="tSub">0.00</b></div>
+        <div id="tDelRow" hidden><span data-i18n="delivery">رسوم التوصيل</span><b id="tDel">0.00</b></div>
+        <div class="grand"><span data-i18n="total">الإجمالي</span><b id="tTotal">0.00</b></div>
+      </div>
+      <p class="warn" id="closedWarn" hidden data-i18n="closed_warn"></p>
+      <p class="msg err" id="orderErr" role="alert"></p>
+      <button class="btn btn-primary full" type="submit" id="placeBtn" data-i18n="place_order">تأكيد الطلب</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="successModal" aria-hidden="true">
+  <div class="modal-box center">
+    <div class="check"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg></div>
+    <h3 data-i18n="ok_title">تم استلام طلبك! 🎉</h3>
+    <p><span data-i18n="ok_num">رقم الطلب</span>: <b id="okNum"></b></p>
+    <p data-i18n="ok_msg"></p>
+    <a class="btn btn-wa full" id="okWa" target="_blank" rel="noopener" data-i18n="ok_wa">أرسل الطلب على واتساب</a>
+    <button class="btn btn-ghost-dark full" data-close data-i18n="ok_close">إغلاق</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

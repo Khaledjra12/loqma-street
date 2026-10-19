@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>لوحة التحكم | لقمة ستريت</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--o:#ff5a1f;--o2:#ff8a3d;--d:#1b1210;--c:#fff8f0;--m:#7b6a62;--g:#1f9d55;--r:#e63946}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,sans-serif;background:var(--c);color:#2b1d18;min-height:100vh}
+    button,input,select,textarea{font:inherit}
+    [hidden]{display:none!important}
+    .login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#1b1210,#6b2a12 70%,var(--o));padding:16px}
+    .box{background:#fff;border-radius:24px;padding:32px;width:min(380px,100%);text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+    .box h1{font-size:1.5rem;margin:8px 0 18px}
+    .box .ico{font-size:3rem}
+    input,select,textarea{width:100%;padding:10px 12px;border-radius:12px;border:2px solid #eadfd5;background:#fffdfa;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:var(--o)}
+    .btn{background:linear-gradient(135deg,var(--o),var(--o2));color:#fff;border:none;padding:10px 20px;border-radius:99px;font-weight:800;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.sec{background:#f0e6dc;color:#2b1d18}.btn.red{background:var(--r)}.btn.green{background:var(--g)}
+    .btn.sm{padding:6px 14px;font-size:.85rem}
+    .err{color:var(--r);font-weight:700;margin-top:10px;min-height:1.4em}
+    header{background:var(--d);color:#fff;padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    header h1{font-size:1.2rem}
+    nav{display:flex;gap:6px;flex-wrap:wrap}
+    nav button{background:rgba(255,255,255,.12);color:#fff;border:none;padding:8px 16px;border-radius:99px;font-weight:700;cursor:pointer}
+    nav button.on{background:var(--o)}
+    main{padding:20px;max-width:1200px;margin:auto}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+    .stat{background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 6px 18px rgba(120,50,10,.08)}
+    .stat b{display:block;font-size:1.6rem;color:var(--o)}.stat small{color:var(--m)}
+    .tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+    .tools select{width:auto}
+    .note{background:#fff3cd;color:#7a5b00;border-radius:12px;padding:10px 14px;font-size:.88rem;margin-bottom:16px;line-height:1.6}
+    .list{display:flex;flex-direction:column;gap:12px}
+    .card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 6px 18px rgba(120,50,10,.08)}
+    .card .top{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .pill{display:inline-block;padding:2px 12px;border-radius:99px;font-size:.78rem;font-weight:800;background:#eee}
+    .pill.new{background:#ffe3d6;color:var(--o)}.pill.preparing{background:#fff3cd;color:#8a6a00}.pill.done{background:#d8f3e3;color:var(--g)}.pill.cancelled{background:#fde0e3;color:var(--r)}
+    .items{color:var(--m);font-size:.9rem;margin:6px 0}
+    .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .empty{text-align:center;color:var(--m);padding:40px}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px rgba(120,50,10,.08)}
+    th,td{padding:8px;text-align:start;border-bottom:1px solid #f3e9df;vertical-align:middle}
+    th{background:#fff0e0;font-size:.85rem}
+    td input[type=number]{width:90px}
+    .wrap{overflow-x:auto}
+    td .em{font-size:1.6rem}
+  </style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <form class="box" id="loginForm">
+    <div class="ico">🔐</div>
+    <h1>لوحة تحكم لقمة ستريت</h1>
+    <input type="password" id="pw" placeholder="كلمة المرور" autocomplete="current-password" autofocus>
+    <button class="btn" style="margin-top:14px;width:100%">دخول</button>
+    <p class="err" id="loginErr"></p>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <h1>🌯 لوحة التحكم</h1>
+    <nav id="nav">
+      <button data-tab="orders" class="on">الطلبات</button>
+      <button data-tab="bookings">الحجوزات</button>
+      <button data-tab="menu">المنيو والأسعار</button>
+    </nav>
+    <button class="btn sec sm" id="logout">خروج</button>
+  </header>
+  <main>
+    <div class="note">
+      ⚠️ هذه اللوحة تعمل بنسخة تجريبية تحفظ البيانات داخل متصفح هذا الجهاز فقط (localStorage).
+      الطلبات والحجوزات الحقيقية تصلك على واتساب. لعرض كل الطلبات من أي جهاز يلزم ربط الموقع بسيرفر وقاعدة بيانات، وكلمة المرور هنا حماية بسيطة وليست آمنة تماماً.
+    </div>
+
+    <section id="tab-orders">
+      <div class="stats" id="stats"></div>
+      <div class="tools">
+        <select id="ordFilter">
+          <option value="all">كل الطلبات</option><option value="new">جديد</option><option value="preparing">قيد التحضير</option>
+          <option value="done">مكتمل</option><option value="cancelled">ملغي</option>
+        </select>
+        <button class="btn sec sm" id="csv">تصدير CSV</button>
+        <button class="btn sec sm" id="refresh">تحديث</button>
+      </div>
+      <div class="list" id="ordList"></div>
+    </section>
+
+    <section id="tab-bookings" hidden>
+      <div class="list" id="bkList"></div>
+    </section>
+
+    <section id="tab-menu" hidden>
+      <div class="tools">
+        <button class="btn green sm" id="addItem">+ صنف جديد</button>
+        <button class="btn sm" id="saveMenu">حفظ التعديلات</button>
+        <button class="btn sec sm" id="resetMenu">استرجاع المنيو الافتراضي</button>
+        <span id="menuMsg" style="font-weight:700;color:var(--g)"></span>
+      </div>
+      <div class="wrap"><table>
+        <thead><tr><th>إيموجي</th><th>الاسم عربي</th><th>Name EN</th><th>القسم</th><th>السعر (د.أ)</th><th>رابط صورة (اختياري)</th><th>متوفر</th><th></th></tr></thead>
+        <tbody id="menuBody"></tbody>
+      </table></div>
+    </section>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var PASSWORD = "loqma2026";
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function get(k) { try { var r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { alert("تعذّر الحفظ في المتصفح"); } }
+
+  var STATUS = { "new": "جديد", preparing: "قيد التحضير", done: "مكتمل", cancelled: "ملغي" };
+  var TYPES = { dine: "أكل بالمطعم", pickup: "استلام", delivery: "توصيل" };
+  var CATS = { shawarma: "شاورما", snacks: "سناكات", drinks: "مشروبات", sweets: "حلويات" };
+  var menu = [];
+
+  function show(ok) { $("#login").hidden = ok; $("#app").hidden = !ok; if (ok) { renderOrders(); renderBookings(); loadMenu(); } }
+  $("#loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ($("#pw").value === PASSWORD) { try { sessionStorage.setItem("lq_admin", "1"); } catch (x) {} show(true); }
+    else { $("#loginErr").textContent = "كلمة المرور غير صحيحة"; }
+  });
+  $("#logout").addEventListener("click", function () { try { sessionStorage.removeItem("lq_admin"); } catch (x) {} location.reload(); });
+  try { if (sessionStorage.getItem("lq_admin") === "1") show(true); } catch (x) {}
+
+  $("#nav").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    $$("#nav button").forEach(function (x) { x.classList.toggle("on", x === b); });
+    ["orders", "bookings", "menu"].forEach(function (t) { $("#tab-" + t).hidden = t !== b.dataset.tab; });
+  });
+
+  function fmtDate(iso) { try { return new Date(iso).toLocaleString("ar-JO"); } catch (e) { return iso; } }
+  function renderOrders() {
+    var all = get("lq_orders") || [];
+    var today = new Date().toDateString();
+    var todays = all.filter(function (o) { return new Date(o.createdAt).toDateString() === today && o.status !== "cancelled"; });
+    var rev = todays.reduce(function (s, o) { return s + o.total; }, 0);
+    $("#stats").innerHTML =
+      '<div class="stat"><b>' + todays.length + "</b><small>طلبات اليوم</small></div>" +
+      '<div class="stat"><b>' + rev.toFixed(2) + "</b><small>مبيعات اليوم (د.أ)</small></div>" +
+      '<div class="stat"><b>' + all.filter(function (o) { return o.status === "new"; }).length + "</b><small>طلبات جديدة</small></div>" +
+      '<div class="stat"><b>' + all.length + "</b><small>إجمالي الطلبات</small></div>";
+    var f = $("#ordFilter").value;
+    var list = all.filter(function (o) { return f === "all" || o.status === f; });
+    $("#ordList").innerHTML = list.length ? list.map(function (o) {
+      return '<div class="card"><div class="top"><b>' + esc(o.id) + ' — ' + esc(o.name) + '</b><span class="pill ' + esc(o.status) + '">' + esc(STATUS[o.status] || o.status) + "</span></div>" +
+        "<div>📞 <span dir='ltr'>" + esc(o.phone) + "</span> · " + esc(TYPES[o.type] || o.type) +
+        (o.table ? " · طاولة " + esc(o.table) : "") + (o.address ? " · 📍 " + esc(o.address) : "") +
+        " · " + (o.pay === "card" ? "💳 بطاقة" : "💵 كاش") + "</div>" +
+        '<div class="items">' + o.items.map(function (i) { return esc(i.name) + " ×" + i.qty; }).join("، ") + "</div>" +
+        "<b>الإجمالي: " + o.total.toFixed(2) + " د.أ</b> <small style='color:#7b6a62'>(" + esc(fmtDate(o.createdAt)) + ")</small>" +
+        '<div class="acts"><button class="btn sm" data-o="' + esc(o.id) + '" data-s="preparing">قيد التحضير</button>' +
+        '<button class="btn green sm" data-o="' + esc(o.id) + '" data-s="done">مكتمل</button>' +
+        '<button class="btn sec sm" data-o="' + esc(o.id) + '" data-s="cancelled">إلغاء</button>' +
+        '<button class="btn red sm" data-del="' + esc(o.id) + '">حذف</button></div></div>';
+    }).join("") : '<div class="empty">لا توجد طلبات</div>';
+  }
+  $("#ordList").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var all = get("lq_orders") || [];
+    if (b.dataset.o) { all.forEach(function (o) { if (o.id === b.dataset.o) o.status = b.dataset.s; }); }
+    else if (b.dataset.del) { if (!confirm("حذف الطلب نهائياً؟")) return; all = all.filter(function (o) { return o.id !== b.dataset.del; }); }
+    set("lq_orders", all); renderOrders();
+  });
+  $("#ordFilter").addEventListener("change", renderOrders);
+  $("#refresh").addEventListener("click", function () { renderOrders(); renderBookings(); });
+  $("#csv").addEventListener("click", function () {
+    var all = get("lq_orders") || [];
+    if (!all.length) { alert("لا توجد طلبات للتصدير"); return; }
+    function cell(v) { v = String(v == null ? "" : v); if (/^[=+\-@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; }
+    var rows = [["رقم", "التاريخ", "الاسم", "الهاتف", "النوع", "الدفع", "الأصناف", "الإجمالي", "الحالة"]].concat(all.map(function (o) {
+      return [o.id, o.createdAt, o.name, o.phone, TYPES[o.type] || o.type, o.pay, o.items.map(function (i) { return i.name + "x" + i.qty; }).join(" | "), o.total.toFixed(2), STATUS[o.status] || o.status];
+    }));
+    var csv = "\uFEFF" + rows.map(function (r) { return r.map(cell).join(","); }).join("\n");
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = "orders.csv"; document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  function renderBookings() {
+    var all = get("lq_bookings") || [];
+    $("#bkList").innerHTML = all.length ? all.map(function (b) {
+      return '<div class="card"><div class="top"><b>' + esc(b.id) + " — " + esc(b.name) + '</b><span class="pill ' + esc(b.status) + '">' + esc(STATUS[b.status] || b.status) + "</span></div>" +
+        "<div>📞 <span dir='ltr'>" + esc(b.phone) + "</span> · 📅 " + esc(b.date) + " · 🕙 " + esc(b.time) + " · 👥 " + esc(b.guests) + "</div>" +
+        (b.notes ? '<div class="items">' + esc(b.notes) + "</div>" : "") +
+        '<div class="acts"><button class="btn green sm" data-b="' + esc(b.id) + '" data-s="done">تم التأكيد</button>' +
+        '<button class="btn sec sm" data-b="' + esc(b.id) + '" data-s="cancelled">إلغاء</button>' +
+        '<button class="btn red sm" data-bdel="' + esc(b.id) + '">حذف</button></div></div>';
+    }).join("") : '<div class="empty">لا توجد حجوزات</div>';
+  }
+  $("#bkList").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var all = get("lq_bookings") || [];
+    if (b.dataset.b) { all.forEach(function (x) { if (x.id === b.dataset.b) x.status = b.dataset.s; }); }
+    else if (b.dataset.bdel) { if (!confirm("حذف الحجز؟")) return; all = all.filter(function (x) { return x.id !== b.dataset.bdel; }); }
+    set("lq_bookings", all); renderBookings();
+  });
+
+  function loadMenu() { menu = JSON.parse(JSON.stringify(get("lq_menu") || window.LQ_DEFAULT_MENU)); renderMenu(); }
+  function renderMenu() {
+    $("#menuBody").innerHTML = menu.map(function (it, i) {
+      var cats = Object.keys(CATS).map(function (k) { return '<option value="' + k + '"' + (it.cat === k ? " selected" : "") + ">" + CATS[k] + "</option>"; }).join("");
+      return "<tr data-i='" + i + "'>" +
+        "<td><input data-f='emoji' value='" + esc(it.emoji) + "' style='width:60px;text-align:center'></td>" +
+        "<td><input data-f='arname' value='" + esc(it.ar.name) + "'></td>" +
+        "<td><input data-f='enname' value='" + esc(it.en.name) + "' dir='ltr'></td>" +
+        "<td><select data-f='cat'>" + cats + "</select></td>" +
+        "<td><input data-f='price' type='number' min='0' step='0.05' value='" + esc(it.price) + "'></td>" +
+        "<td><input data-f='img' value='" + esc(it.img || "") + "' dir='ltr' placeholder='https://...'></td>" +
+        "<td><input data-f='available' type='checkbox' style='width:auto'" + (it.available === false ? "" : " checked") + "></td>" +
+        "<td><button class='btn red sm' data-rm='" + i + "'>حذف</button></td></tr>";
+    }).join("");
+  }
+  function syncFromDom() {
+    $$("#menuBody tr").forEach(function (tr) {
+      var it = menu[parseInt(tr.dataset.i, 10)]; if (!it) return;
+      function v(f) { return tr.querySelector("[data-f='" + f + "']"); }
+      it.emoji = v("emoji").value || "🍽️";
+      it.ar.name = v("arname").value.trim() || it.ar.name;
+      it.en.name = v("enname").value.trim() || it.en.name;
+      it.cat = v("cat").value;
+      var p = parseFloat(v("price").value); it.price = isFinite(p) && p >= 0 ? Math.round(p * 100) / 100 : it.price;
+      var img = v("img").value.trim();
+      it.img = /^(https:\/\/|\.\/|\/|images\/)/i.test(img) ? img : "";
+      it.available = v("available").checked;
+    });
+  }
+  $("#menuBody").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-rm]"); if (!b) return;
+    if (!confirm("حذف هذا الصنف؟")) return;
+    syncFromDom(); menu.splice(parseInt(b.dataset.rm, 10), 1); renderMenu();
+  });
+  $("#addItem").addEventListener("click", function () {
+    syncFromDom();
+    var id = menu.reduce(function (m, x) { return Math.max(m, x.id); }, 0) + 1;
+    menu.push({ id: id, cat: "snacks", price: 1, emoji: "🍽️", c1: "#ffb347", c2: "#e8431a", img: "", hot: false, available: true,
+      ar: { name: "صنف جديد", desc: "وصف الصنف" }, en: { name: "New item", desc: "Item description" } });
+    renderMenu();
+  });
+  $("#saveMenu").addEventListener("click", function () {
+    syncFromDom(); set("lq_menu", menu);
+    $("#menuMsg").textContent = "تم الحفظ ✔ (يظهر في الموقع على هذا المتصفح)";
+    setTimeout(function () { $("#menuMsg").textContent = ""; }, 3000);
+  });
+  $("#resetMenu").addEventListener("click", function () {
+    if (!confirm("استرجاع المنيو الافتراضي؟ ستضيع تعديلاتك.")) return;
+    try { localStorage.removeItem("lq_menu"); } catch (e) {} loadMenu();
+  });
+})();
+</script>
+</body>
+</html>
